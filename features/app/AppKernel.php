@@ -23,13 +23,13 @@ class AppKernel extends Kernel
             new SensioFrameworkExtraBundle(),
             new SwitchUserStatelessBundle(),
         ];
-        
+
         if ('api_platform' === $this->getEnvironment()) {
             $bundles[] = new DoctrineBundle();
             $bundles[] = new DunglasApiBundle();
             $bundles[] = new UserBundle();
         }
-        
+
         return $bundles;
     }
 

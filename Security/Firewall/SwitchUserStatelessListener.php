@@ -4,21 +4,22 @@ namespace SwitchUserStatelessBundle\Security\Firewall;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\User\UserCheckerInterface;
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Role\SwitchUserRole;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Http\Event\SwitchUserEvent;
-use Symfony\Component\Security\Http\SecurityEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\TokenNotFoundException;
+use Symfony\Component\Security\Core\Role\SwitchUserRole;
+use Symfony\Component\Security\Core\User\UserCheckerInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Http\Event\SwitchUserEvent;
 use Symfony\Component\Security\Http\Firewall\ListenerInterface;
+use Symfony\Component\Security\Http\SecurityEvents;
 
 /**
  * SwitchUserStatelessListener allows a user to impersonate another one temporarily.
@@ -107,6 +108,8 @@ class SwitchUserStatelessListener implements ListenerInterface
 
     /**
      * @param GetResponseEvent $event
+     * 
+     * @throws AuthenticationException
      */
     public function handle(GetResponseEvent $event)
     {
@@ -117,11 +120,7 @@ class SwitchUserStatelessListener implements ListenerInterface
             return;
         }
 
-        try {
-            $this->tokenStorage->setToken($this->attemptSwitchUser($request));
-        } catch (AuthenticationException $e) {
-            throw new \LogicException(sprintf('Switch User failed: "%s"', $e->getMessage()));
-        }
+        $this->tokenStorage->setToken($this->attemptSwitchUser($request));
     }
 
     /**
@@ -130,14 +129,14 @@ class SwitchUserStatelessListener implements ListenerInterface
      * @return TokenInterface|null The new TokenInterface if successfully switched, null otherwise
      *
      * @throws AccessDeniedException
-     * @throws \RuntimeException Token can't be null
+     * @throws TokenNotFoundException
      */
     private function attemptSwitchUser(Request $request)
     {
         $token = $this->tokenStorage->getToken();
 
         if (null === $token) {
-            throw new \RuntimeException('Token can\'t be null');
+            throw new TokenNotFoundException();
         }
 
         if (false === $this->accessDecisionManager->decide($token, [$this->role])) {

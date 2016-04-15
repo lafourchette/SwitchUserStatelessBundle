@@ -73,8 +73,8 @@ class ApiPlatformProfileController extends ProfileController
                 $user,
                 'jsonld',
                 [
-                    'request_uri'         => $request->getRequestUri(),
-                    'resource_class'      => get_class($this->tokenStorage->getToken()->getUser()),
+                    'request_uri' => $request->getRequestUri(),
+                    'resource_class' => get_class($this->tokenStorage->getToken()->getUser()),
                     'item_operation_name' => 'profile',
                 ]
             )

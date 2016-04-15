@@ -13,7 +13,8 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\TokenNotFoundException;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\Role\SwitchUserRole;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
@@ -73,7 +74,9 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
             $e = null;
             try {
                 $listener->handle($event);
-            } catch (\Exception $e) {
+            } catch (TokenNotFoundException $e) {
+            } catch (AccessDeniedException $e) {
+            } catch (AuthenticationException $e) {
             }
             $this->assertEquals($expectedException, $e);
         }
@@ -116,7 +119,7 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
         $tokenStorageMock = $this->getTokenStorageMock();
         $tokenStorageMock->getToken()->shouldBeCalled();
 
-        return [$request, $tokenStorageMock->reveal(), new \RuntimeException('Token can\'t be null')];
+        return [$request, $tokenStorageMock->reveal(), new TokenNotFoundException()];
     }
 
     /**
@@ -160,13 +163,12 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
         $accessDecisionManagerMock->decide($tokenMock->reveal(), ['myRole'])->willReturn(true)->shouldBeCalled();
 
         $userProvider = $this->getUserProviderMock();
-        $exception = new UsernameNotFoundException('unknown user');
-        $userProvider->loadUserByUsername('newUser')->willThrow($exception)->shouldBeCalled();
+        $userProvider->loadUserByUsername('newUser')->willThrow(new AuthenticationException())->shouldBeCalled();
 
         return [
             $request,
             $tokenStorageMock->reveal(),
-            new \LogicException('Switch User failed: "unknown user"'),
+            new AuthenticationException(),
             $accessDecisionManagerMock->reveal(),
             $userProvider->reveal(),
         ];
