@@ -55,7 +55,6 @@ JSON;
      */
     public function iShouldSeeMyCompleteProfileAsJSONLD()
     {
-        // TODO fix valid JSON-LD response
         $expected = <<<JSON
 {
     "@context": "/contexts/User",
@@ -103,7 +102,6 @@ JSON;
      */
     public function iShouldSeeSomebodysCompleteProfileAsJSONLD()
     {
-        // TODO fix valid JSON-LD response
         $expected = <<<JSON
 {
     "@context": "/contexts/User",
