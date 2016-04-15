@@ -47,7 +47,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
     "enabled": true
 }
 JSON;
-        $this->assertJSONAreEquals($expected, $this->client->getResponse()->getContent());
+        PHPUnit_Framework_Assert::assertJsonStringEqualsJsonString($expected, $this->client->getResponse()->getContent());
     }
 
     /**
@@ -67,7 +67,7 @@ JSON;
     "firstName": "Admin"
 }
 JSON;
-        $this->assertJSONAreEquals($expected, $this->client->getResponse()->getContent());
+        PHPUnit_Framework_Assert::assertJsonStringEqualsJsonString($expected, $this->client->getResponse()->getContent());
     }
 
     /**
@@ -95,7 +95,7 @@ JSON;
     "enabled": true
 }
 JSON;
-        $this->assertJSONAreEquals($expected, $this->client->getResponse()->getContent());
+        PHPUnit_Framework_Assert::assertJsonStringEqualsJsonString($expected, $this->client->getResponse()->getContent());
     }
 
     /**
@@ -115,21 +115,6 @@ JSON;
     "firstName": "John"
 }
 JSON;
-        $this->assertJSONAreEquals($expected, $this->client->getResponse()->getContent());
-    }
-
-    private function assertJSONAreEquals($expected, $content)
-    {
-        if (json_decode($expected, true) !== json_decode($content, true)) {
-            throw new \Exception(
-                sprintf(
-                    "Fail asserting two JSON are equals:\n%s\n##########\n%s",
-                    $expected,
-                    $content
-                )
-            );
-        }
-
-        return true;
+        PHPUnit_Framework_Assert::assertJsonStringEqualsJsonString($expected, $this->client->getResponse()->getContent());
     }
 }
