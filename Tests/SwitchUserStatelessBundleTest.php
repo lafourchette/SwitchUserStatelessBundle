@@ -5,6 +5,8 @@ namespace SwitchUserStatelessBundle\Tests;
 use Prophecy\Prophecy\ObjectProphecy;
 use SwitchUserStatelessBundle\DependencyInjection\Security\SwitchUserStatelessFactory;
 use SwitchUserStatelessBundle\SwitchUserStatelessBundle;
+use Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class SwitchUserStatelessBundleTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,7 +28,7 @@ class SwitchUserStatelessBundleTest extends \PHPUnit_Framework_TestCase
      */
     private function getContainerBuilderMock()
     {
-        return $this->prophesize('Symfony\Component\DependencyInjection\ContainerBuilder');
+        return $this->prophesize(ContainerBuilder::class);
     }
 
     /**
@@ -34,6 +36,6 @@ class SwitchUserStatelessBundleTest extends \PHPUnit_Framework_TestCase
      */
     private function getSecurityExtensionMock()
     {
-        return $this->prophesize('Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension');
+        return $this->prophesize(SecurityExtension::class);
     }
 }

@@ -4,6 +4,9 @@ namespace SwitchUserStatelessBundle\Tests\DependencyInjection\Security;
 
 use SwitchUserStatelessBundle\DependencyInjection\Security\SwitchUserStatelessFactory;
 use Prophecy\Argument;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeBuilder;
+use Symfony\Component\Config\Definition\Builder\ScalarNodeDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class SwitchUserStatelessFactoryTest extends \PHPUnit_Framework_TestCase
@@ -37,9 +40,9 @@ class SwitchUserStatelessFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testAddConfiguration()
     {
-        $scalarNodeMock = $this->prophesize('Symfony\Component\Config\Definition\Builder\ScalarNodeDefinition');
-        $nodeBuilderMock = $this->prophesize('Symfony\Component\Config\Definition\Builder\NodeBuilder');
-        $nodeMock = $this->prophesize('Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition');
+        $scalarNodeMock = $this->prophesize(ScalarNodeDefinition::class);
+        $nodeBuilderMock = $this->prophesize(NodeBuilder::class);
+        $nodeMock = $this->prophesize(ArrayNodeDefinition::class);
 
         $nodeMock->children()->willReturn($nodeBuilderMock->reveal())->shouldBeCalledTimes(1);
 

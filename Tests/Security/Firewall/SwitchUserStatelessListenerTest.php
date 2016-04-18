@@ -231,7 +231,7 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function getTokenStorageMock()
     {
-        return $this->prophesize('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
+        return $this->prophesize(TokenStorageInterface::class);
     }
 
     /**
@@ -239,7 +239,7 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function getUserProviderMock()
     {
-        return $this->prophesize('Symfony\Component\Security\Core\User\UserProviderInterface');
+        return $this->prophesize(UserProviderInterface::class);
     }
 
     /**
@@ -247,7 +247,7 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function getUserCheckerMock()
     {
-        return $this->prophesize('Symfony\Component\Security\Core\User\UserCheckerInterface');
+        return $this->prophesize(UserCheckerInterface::class);
     }
 
     /**
@@ -255,7 +255,7 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function getAccessDecisionManagerMock()
     {
-        return $this->prophesize('Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface');
+        return $this->prophesize(AccessDecisionManagerInterface::class);
     }
 
     /**
@@ -263,7 +263,7 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function getLoggerMock()
     {
-        return $this->prophesize('Psr\Log\LoggerInterface');
+        return $this->prophesize(LoggerInterface::class);
     }
 
     /**
@@ -271,7 +271,7 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function getEventDispatcherMock()
     {
-        return $this->prophesize('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        return $this->prophesize(EventDispatcherInterface::class);
     }
 
     /**
@@ -279,7 +279,7 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function getKernelMock()
     {
-        return $this->prophesize('Symfony\Component\HttpKernel\HttpKernelInterface');
+        return $this->prophesize(HttpKernelInterface::class);
     }
 
     /**
@@ -287,7 +287,7 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function getTokenMock()
     {
-        return $this->prophesize('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        return $this->prophesize(TokenInterface::class);
     }
 
     /**
@@ -295,6 +295,6 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function getUserMock()
     {
-        return $this->prophesize('Symfony\Component\Security\Core\User\UserInterface');
+        return $this->prophesize(UserInterface::class);
     }
 }
