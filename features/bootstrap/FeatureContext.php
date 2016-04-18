@@ -51,25 +51,6 @@ JSON;
     }
 
     /**
-     * @Then I should see my complete profile as JSON-LD
-     */
-    public function iShouldSeeMyCompleteProfileAsJSONLD()
-    {
-        $expected = <<<JSON
-{
-    "@context": "/contexts/User",
-    "@id": "/users/42",
-    "@type": "User",
-    "username": "admin",
-    "email": "admin@example.com",
-    "lastName": "ADMIN",
-    "firstName": "Admin"
-}
-JSON;
-        PHPUnit_Framework_Assert::assertJsonStringEqualsJsonString($expected, $this->client->getResponse()->getContent());
-    }
-
-    /**
      * @When I impersonate somebody's profile
      */
     public function iImpersonateSomebodysProfile()
@@ -92,25 +73,6 @@ JSON;
     "accountNonLocked": true,
     "credentialsNonExpired": true,
     "enabled": true
-}
-JSON;
-        PHPUnit_Framework_Assert::assertJsonStringEqualsJsonString($expected, $this->client->getResponse()->getContent());
-    }
-
-    /**
-     * @Then I should see somebody's complete profile as JSON-LD
-     */
-    public function iShouldSeeSomebodysCompleteProfileAsJSONLD()
-    {
-        $expected = <<<JSON
-{
-    "@context": "/contexts/User",
-    "@id": "/users/54",
-    "@type": "User",
-    "username": "john.doe",
-    "email": "john.doe@example.com",
-    "lastName": "DOE",
-    "firstName": "John"
 }
 JSON;
         PHPUnit_Framework_Assert::assertJsonStringEqualsJsonString($expected, $this->client->getResponse()->getContent());

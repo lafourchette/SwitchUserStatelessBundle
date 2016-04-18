@@ -1,43 +1,77 @@
 <?php
 
-use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
-use Dunglas\ApiBundle\DunglasApiBundle;
-use Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle;
 use SwitchUserStatelessBundle\SwitchUserStatelessBundle;
-use SwitchUserStatelessBundle\Tests\UserBundle\UserBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
+use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\Routing\RouteCollectionBuilder;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Test purpose micro-kernel.
+ *
+ * @author Kévin Dunglas <dunglas@gmail.com>
+ */
 class AppKernel extends Kernel
 {
-    /**
-     * {@inheritdoc}
-     */
+    use MicroKernelTrait;
+
     public function registerBundles()
     {
-        $bundles = [
+        return [
             new FrameworkBundle(),
             new SecurityBundle(),
-            new SensioFrameworkExtraBundle(),
             new SwitchUserStatelessBundle(),
         ];
-
-        if ('api_platform' === $this->getEnvironment()) {
-            $bundles[] = new DoctrineBundle();
-            $bundles[] = new DunglasApiBundle();
-            $bundles[] = new UserBundle();
-        }
-
-        return $bundles;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    protected function configureRoutes(RouteCollectionBuilder $routes)
     {
-        $loader->load(sprintf('%s/config_%s.yml', $this->getRootDir(), $this->getEnvironment()));
+        $routes->add('/profile', 'kernel:profileAction', 'profile');
+    }
+
+    protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
+    {
+        $c->loadFromExtension('framework', [
+            'secret' => 'SwitchUserStatelessBundle',
+            'test' => null,
+            'serializer' => ['enabled' => true],
+        ]);
+
+        $c->loadFromExtension('security', [
+            'encoders' => [UserInterface::class => 'plaintext'],
+            'providers' => [
+                'in_memory' => [
+                    'memory' => [
+                        'users' => [
+                            'admin' => ['password' => 'admin', 'roles' => ['ROLE_ALLOWED_TO_SWITCH']],
+                            'john.doe' => ['password' => 'john.doe', 'roles' => ['ROLE_USER']],
+                        ],
+                    ],
+                ],
+            ],
+            'firewalls' => [
+                'main' => [
+                    'pattern' => '^/',
+                    'stateless' => true,
+                    'switch_user_stateless' => true,
+                    'http_basic' => null,
+                ],
+            ],
+            'access_control' => [
+                ['path' => '^/', 'roles' => 'IS_AUTHENTICATED_FULLY'],
+            ],
+        ]);
+    }
+
+    public function profileAction()
+    {
+        return new JsonResponse($this->container->get('serializer')->normalize(
+            $this->container->get('security.token_storage')->getToken()->getUser(), 'json')
+        );
     }
 }
