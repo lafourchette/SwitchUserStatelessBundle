@@ -30,6 +30,6 @@ class SwitchUserStatelessProviderTest extends \PHPUnit_Framework_TestCase
      */
     private function getTokenMock()
     {
-        return $this->prophesize('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        return $this->prophesize(TokenInterface::class);
     }
 }
