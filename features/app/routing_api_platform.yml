@@ -1,7 +1,0 @@
-api:
-    resource: .
-    type: api
-
-switch_user_stateless:
-    resource: "@SwitchUserStatelessBundle/Controller/ApiPlatformProfileController.php"
-    type: annotation

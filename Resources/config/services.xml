@@ -23,18 +23,5 @@
             <argument>ROLE_ALLOWED_TO_SWITCH</argument>
             <argument type="service" id="event_dispatcher" on-invalid="null"/>
         </service>
-
-        <service id="switch_user_stateless.controller.profile"
-                 class="SwitchUserStatelessBundle\Controller\ProfileController">
-            <argument type="service" id="serializer" />
-            <argument type="service" id="security.token_storage" />
-            <argument type="service" id="security.authorization_checker" />
-        </service>
-
-        <service id="switch_user_stateless.controller.api_platform_profile"
-                 class="SwitchUserStatelessBundle\Controller\ApiPlatformProfileController"
-                 parent="switch_user_stateless.controller.profile">
-            <argument type="service" id="api.resource_collection" on-invalid="null" />
-        </service>
     </services>
 </container>

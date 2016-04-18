@@ -23,7 +23,7 @@ security:
 framework:
     secret: SwitchUserStatelessBundle
     router:
-        resource: %kernel.root_dir%/routing_%kernel.environment%.yml
+        resource: %kernel.root_dir%/routing.yml
         strict_requirements: %kernel.debug%
     validation:
         enable_annotations: true

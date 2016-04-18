@@ -55,4 +55,3 @@ install:
 script:
     - vendor/bin/phpunit
     - vendor/bin/behat
-    - vendor/bin/behat --profile=api_platform

@@ -1,7 +1,6 @@
 <?php
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
-use Dunglas\ApiBundle\DunglasApiBundle;
 use Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle;
 use SwitchUserStatelessBundle\SwitchUserStatelessBundle;
 use SwitchUserStatelessBundle\Tests\UserBundle\UserBundle;
@@ -17,20 +16,14 @@ class AppKernel extends Kernel
      */
     public function registerBundles()
     {
-        $bundles = [
+        return [
             new FrameworkBundle(),
             new SecurityBundle(),
             new SensioFrameworkExtraBundle(),
             new SwitchUserStatelessBundle(),
+            new DoctrineBundle(),
+            new UserBundle(),
         ];
-
-        if ('api_platform' === $this->getEnvironment()) {
-            $bundles[] = new DoctrineBundle();
-            $bundles[] = new DunglasApiBundle();
-            $bundles[] = new UserBundle();
-        }
-
-        return $bundles;
     }
 
     /**
@@ -38,6 +31,6 @@ class AppKernel extends Kernel
      */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(sprintf('%s/config_%s.yml', $this->getRootDir(), $this->getEnvironment()));
+        $loader->load(sprintf('%s/config.yml', $this->getRootDir()));
     }
 }
