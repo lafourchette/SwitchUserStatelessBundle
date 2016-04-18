@@ -9,15 +9,19 @@ SwitchUserStatelessBundle
 
 This bundle provides impersonating feature (switch user) for API use.
 
+## Install
+
 Install this bundle through [Composer](https://getcomposer.org/):
 
 ```
 composer require lafourchette/switch-user-stateless-bundle
 ```
 
-Then, update your AppKernel.php file as following:
+Then, update your application kernel:
 
 ```php
+// app/AppKernel.php
+
 class AppKernel extends Kernel
 {
     public function registerBundles()
@@ -26,19 +30,17 @@ class AppKernel extends Kernel
             // ...
             new SwitchUserStatelessBundle\SwitchUserStatelessBundle(),
         ];
+
+        // ...
+    }
+}
 ```
 
-Load routing in `app/config/routing.yml`:
+Finally, update your firewalls as following:
 
 ```yml
-switch_user_stateless:
-    resource: "@SwitchUserStatelessBundle/Controller/ProfileController.php"
-    type: annotation
-```
+# app/config/security.yml
 
-Finally, update your firewalls in your `app/config/security.yml` file as following:
-
-```yml
 security:
     firewalls:
         main:
@@ -47,4 +49,14 @@ security:
             switch_user_stateless: true
 ```
 
-[Read the complete doc](/Resources/doc/index.md)
+## Usage
+
+To use this feature, you need to add a `X-Switch-User` header to issued HTTP request containing the username of the user you want
+to switch:
+
+```
+X-Switch-User: johndoe
+```
+
+For security reasons, this feature is only accessible for users with `ROLE_ALLOWED_TO_SWITCH` permission. Admin users
+have this permission by default.
