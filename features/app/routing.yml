@@ -1,3 +1,0 @@
-switch_user_stateless:
-    resource: "@UserBundle/Controller/ProfileController.php"
-    type: annotation
