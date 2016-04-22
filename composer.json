@@ -40,12 +40,15 @@
     },
     "autoload": {
         "psr-4": {
-            "SwitchUserStatelessBundle\\": ""
-        }
+            "LaFourchette\\SwitchUserStatelessBundle\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
-            "SwitchUserStatelessBundle\\Tests\\": "features/app"
+            "LaFourchette\\SwitchUserStatelessBundle\\Tests\\": "features/app"
         }
     },
     "extra": {

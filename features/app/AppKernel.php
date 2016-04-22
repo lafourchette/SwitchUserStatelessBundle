@@ -1,6 +1,6 @@
 <?php
 
-use SwitchUserStatelessBundle\SwitchUserStatelessBundle;
+use LaFourchette\SwitchUserStatelessBundle\SwitchUserStatelessBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
