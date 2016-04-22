@@ -1,8 +1,8 @@
 <?php
 
-namespace SwitchUserStatelessBundle\Tests\DependencyInjection\Security;
+namespace LaFourchette\SwitchUserStatelessBundle\Tests\DependencyInjection\Security;
 
-use SwitchUserStatelessBundle\DependencyInjection\Security\SwitchUserStatelessFactory;
+use LaFourchette\SwitchUserStatelessBundle\DependencyInjection\Security\SwitchUserStatelessFactory;
 use Prophecy\Argument;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;

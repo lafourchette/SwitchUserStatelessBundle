@@ -1,10 +1,10 @@
 <?php
 
-namespace SwitchUserStatelessBundle\Tests;
+namespace LaFourchette\SwitchUserStatelessBundle\Tests;
 
 use Prophecy\Prophecy\ObjectProphecy;
-use SwitchUserStatelessBundle\DependencyInjection\Security\SwitchUserStatelessFactory;
-use SwitchUserStatelessBundle\SwitchUserStatelessBundle;
+use LaFourchette\SwitchUserStatelessBundle\DependencyInjection\Security\SwitchUserStatelessFactory;
+use LaFourchette\SwitchUserStatelessBundle\SwitchUserStatelessBundle;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 

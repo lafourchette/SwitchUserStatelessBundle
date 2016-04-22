@@ -1,6 +1,6 @@
 <?php
 
-namespace SwitchUserStatelessBundle\DependencyInjection;
+namespace LaFourchette\SwitchUserStatelessBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

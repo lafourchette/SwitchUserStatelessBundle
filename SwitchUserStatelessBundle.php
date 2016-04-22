@@ -1,10 +1,10 @@
 <?php
 
-namespace SwitchUserStatelessBundle;
+namespace LaFourchette\SwitchUserStatelessBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use SwitchUserStatelessBundle\DependencyInjection\Security\SwitchUserStatelessFactory;
+use LaFourchette\SwitchUserStatelessBundle\DependencyInjection\Security\SwitchUserStatelessFactory;
 
 class SwitchUserStatelessBundle extends Bundle
 {

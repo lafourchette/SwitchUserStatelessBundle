@@ -1,6 +1,6 @@
 <?php
 
-namespace SwitchUserStatelessBundle\Security\Authentication\Provider;
+namespace LaFourchette\SwitchUserStatelessBundle\Security\Authentication\Provider;
 
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;

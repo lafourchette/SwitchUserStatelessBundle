@@ -1,6 +1,6 @@
 <?php
 
-namespace SwitchUserStatelessBundle\DependencyInjection\Security;
+namespace LaFourchette\SwitchUserStatelessBundle\DependencyInjection\Security;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;

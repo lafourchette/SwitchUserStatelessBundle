@@ -28,7 +28,7 @@ class AppKernel extends Kernel
     {
         $bundles = [
             // ...
-            new SwitchUserStatelessBundle\SwitchUserStatelessBundle(),
+            new LaFourchette\SwitchUserStatelessBundle\SwitchUserStatelessBundle(),
         ];
 
         // ...
@@ -51,8 +51,8 @@ security:
 
 ## Usage
 
-To use this feature, you need to add a `X-Switch-User` header to issued HTTP request containing the username of the user you want
-to switch:
+To use this feature, you need to add a `X-Switch-User` header to issued HTTP request containing the username of the
+user you want to switch:
 
 ```
 X-Switch-User: johndoe

@@ -5,12 +5,12 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="security.authentication.provider.switch_user_stateless"
-                 class="SwitchUserStatelessBundle\Security\Authentication\Provider\SwitchUserStatelessProvider"
+                 class="LaFourchette\SwitchUserStatelessBundle\Security\Authentication\Provider\SwitchUserStatelessProvider"
                  public="false">
         </service>
 
         <service id="security.authentication.listener.switch_user_stateless"
-                 class="SwitchUserStatelessBundle\Security\Firewall\SwitchUserStatelessListener"
+                 class="LaFourchette\SwitchUserStatelessBundle\Security\Firewall\SwitchUserStatelessListener"
                  public="false">
             <tag name="monolog.logger" channel="security" />
             <argument type="service" id="security.token_storage" />

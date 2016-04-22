@@ -1,7 +1,8 @@
 <?php
 
-namespace SwitchUserStatelessBundle\Security\Firewall;
+namespace LaFourchette\SwitchUserStatelessBundle\Tests\Security\Firewall;
 
+use LaFourchette\SwitchUserStatelessBundle\Security\Firewall\SwitchUserStatelessListener;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

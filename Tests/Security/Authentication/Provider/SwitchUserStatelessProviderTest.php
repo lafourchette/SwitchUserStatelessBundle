@@ -1,8 +1,8 @@
 <?php
 
-namespace SwitchUserStatelessBundle\Tests\Security\Authentication\Provider;
+namespace LaFourchette\SwitchUserStatelessBundle\Tests\Security\Authentication\Provider;
 
-use SwitchUserStatelessBundle\Security\Authentication\Provider\SwitchUserStatelessProvider;
+use LaFourchette\SwitchUserStatelessBundle\Security\Authentication\Provider\SwitchUserStatelessProvider;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 

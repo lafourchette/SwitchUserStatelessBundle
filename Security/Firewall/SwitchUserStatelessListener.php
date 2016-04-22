@@ -1,6 +1,6 @@
 <?php
 
-namespace SwitchUserStatelessBundle\Security\Firewall;
+namespace LaFourchette\SwitchUserStatelessBundle\Security\Firewall;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
