@@ -42,7 +42,7 @@
         "psr-4": {
             "LaFourchette\\SwitchUserStatelessBundle\\": ""
         },
-        "excluse-from-classmap": [
+        "exclude-from-classmap": [
             "/Tests/"
         ]
     },
