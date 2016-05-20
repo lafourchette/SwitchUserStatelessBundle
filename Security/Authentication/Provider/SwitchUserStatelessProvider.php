@@ -2,14 +2,15 @@
 
 namespace LaFourchette\SwitchUserStatelessBundle\Security\Authentication\Provider;
 
+use LaFourchette\SwitchUserStatelessBundle\DependencyInjection\Security\SwitchUserStatelessFactory;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
  * This class does nothing, but is required.
  *
- * @see \SwitchUserStatelessBundle\DependencyInjection\Security\SwitchUserStatelessFactory
+ * @see SwitchUserStatelessFactory
  */
 class SwitchUserStatelessProvider implements AuthenticationProviderInterface
 {

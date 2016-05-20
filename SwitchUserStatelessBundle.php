@@ -2,9 +2,10 @@
 
 namespace LaFourchette\SwitchUserStatelessBundle;
 
+use LaFourchette\SwitchUserStatelessBundle\DependencyInjection\Security\SwitchUserStatelessFactory;
+use Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use LaFourchette\SwitchUserStatelessBundle\DependencyInjection\Security\SwitchUserStatelessFactory;
 
 class SwitchUserStatelessBundle extends Bundle
 {
@@ -12,7 +13,7 @@ class SwitchUserStatelessBundle extends Bundle
     {
         parent::build($container);
 
-        /** @var \Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension $extension */
+        /** @var SecurityExtension $extension */
         $extension = $container->getExtension('security');
         $extension->addSecurityListenerFactory(new SwitchUserStatelessFactory());
     }

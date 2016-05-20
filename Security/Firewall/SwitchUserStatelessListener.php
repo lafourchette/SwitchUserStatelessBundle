@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\TokenNotFoundException;
 use Symfony\Component\Security\Core\Role\SwitchUserRole;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Event\SwitchUserEvent;
 use Symfony\Component\Security\Http\Firewall\ListenerInterface;
@@ -159,7 +160,7 @@ class SwitchUserStatelessListener implements ListenerInterface
         $token = new UsernamePasswordToken($user, $user->getPassword(), $this->providerKey, $roles);
 
         if (null !== $this->dispatcher) {
-            /** @var \Symfony\Component\Security\Core\User\UserInterface $user */
+            /** @var UserInterface $user */
             $user = $token->getUser();
 
             $switchEvent = new SwitchUserEvent($request, $user);
