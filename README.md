@@ -49,6 +49,18 @@ security:
             switch_user_stateless: true
 ```
 
+## Configuration
+
+You can configure the parameter used in HTTP request and role of user who switch in your config.yml. The examples below are the default values.
+
+```yml
+# app/config/config.yml
+
+switch_user_stateless:
+    parameter: 'X-Switch-User'
+    role: 'ROLE_ALLOWED_TO_SWITCH'
+```
+
 ## Usage
 
 To use this feature, you need to add a `X-Switch-User` header to issued HTTP request containing the username of the
