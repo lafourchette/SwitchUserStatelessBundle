@@ -2,9 +2,9 @@
 
 namespace LaFourchette\SwitchUserStatelessBundle\Tests;
 
-use Prophecy\Prophecy\ObjectProphecy;
 use LaFourchette\SwitchUserStatelessBundle\DependencyInjection\Security\SwitchUserStatelessFactory;
 use LaFourchette\SwitchUserStatelessBundle\SwitchUserStatelessBundle;
+use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
