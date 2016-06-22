@@ -60,3 +60,7 @@ X-Switch-User: johndoe
 
 For security reasons, this feature is only accessible for users with `ROLE_ALLOWED_TO_SWITCH` permission. Admin users
 have this permission by default.
+
+## Troubleshooting
+
+[Solving problems here](https://github.com/lafourchette/SwitchUserStatelessBundle/tree/master/doc/troubleshooting.md)
