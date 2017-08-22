@@ -57,7 +57,8 @@ You can configure the parameter used in HTTP request and role of user who switch
 # app/config/config.yml
 
 switch_user_stateless:
-    parameter: 'X-Switch-User'
+    header: 'X-Switch-User'
+    query_parameter: '_switch_user'
     role: 'ROLE_ALLOWED_TO_SWITCH'
 ```
 

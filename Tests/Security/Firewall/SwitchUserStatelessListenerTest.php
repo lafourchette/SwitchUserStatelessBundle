@@ -62,6 +62,7 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
             $accessDecisionManager,
             $logger,
             'myParameter',
+            'myHeader',
             'myRole',
             $eventDispatcher
         );
@@ -91,6 +92,7 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
         return [
             $this->getHandleDataWrongParameter(),
             $this->getHandleDataNotConnected(),
+            $this->getHandleQueryDataNotConnected(),
             $this->getHandleDataNotAllowedToSwitch(),
             $this->getHandleDataUnknownUser(),
             $this->getHandleDataAllowedToSwitch(),
@@ -116,7 +118,20 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
     private function getHandleDataNotConnected()
     {
         $request = new Request();
-        $request->headers->set('myParameter', 'newUser');
+        $request->headers->set('myHeader', 'newUser');
+        $tokenStorageMock = $this->getTokenStorageMock();
+        $tokenStorageMock->getToken()->shouldBeCalled();
+
+        return [$request, $tokenStorageMock->reveal(), new TokenNotFoundException()];
+    }
+
+    /**
+     * @return array
+     */
+    private function getHandleQueryDataNotConnected()
+    {
+        $request = new Request();
+        $request->query->set('myParameter', 'newUser');
         $tokenStorageMock = $this->getTokenStorageMock();
         $tokenStorageMock->getToken()->shouldBeCalled();
 
@@ -129,7 +144,7 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
     private function getHandleDataNotAllowedToSwitch()
     {
         $request = new Request();
-        $request->headers->set('myParameter', 'newUser');
+        $request->headers->set('myHeader', 'newUser');
 
         $tokenMock = $this->getTokenMock();
         $tokenMock->getUsername()->willReturn('adminUsername')->shouldBeCalled();
@@ -153,7 +168,7 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
     private function getHandleDataUnknownUser()
     {
         $request = new Request();
-        $request->headers->set('myParameter', 'newUser');
+        $request->headers->set('myHeader', 'newUser');
 
         $tokenMock = $this->getTokenMock();
         $tokenMock->getUsername()->willReturn('adminUsername')->shouldBeCalled();
@@ -181,7 +196,7 @@ class SwitchUserStatelessListenerTest extends \PHPUnit_Framework_TestCase
     private function getHandleDataAllowedToSwitch()
     {
         $request = new Request();
-        $request->headers->set('myParameter', 'newUser');
+        $request->headers->set('myHeader', 'newUser');
 
         $previousRole = new Role('MY_ROLE');
         $userMock = $this->getUserMock();

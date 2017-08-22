@@ -42,8 +42,9 @@ class SwitchUserStatelessFactory implements SecurityFactoryInterface
             )
             ->replaceArgument(1, new Reference($userProvider))
             ->replaceArgument(3, $id)
-            ->replaceArgument(6, $config['parameter'])
-            ->replaceArgument(7, $config['role'])
+            ->replaceArgument(6, $config['query_parameter'])
+            ->replaceArgument(7, $config['header'])
+            ->replaceArgument(8, $config['role'])
         ;
 
         return [$providerId, $listenerId, $defaultEntryPoint];
@@ -72,7 +73,8 @@ class SwitchUserStatelessFactory implements SecurityFactoryInterface
     {
         /* @var ArrayNodeDefinition $node */
         $node->children()
-            ->scalarNode('parameter')->defaultValue('X-Switch-User')->end()
+            ->scalarNode('query_parameter')->defaultValue(null)->end()
+            ->scalarNode('header')->defaultValue('X-Switch-User')->end()
             ->scalarNode('role')->defaultValue('ROLE_ALLOWED_TO_SWITCH')->end()
         ;
     }

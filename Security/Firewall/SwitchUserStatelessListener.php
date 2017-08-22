@@ -57,6 +57,11 @@ class SwitchUserStatelessListener implements ListenerInterface
     /**
      * @var string
      */
+    private $usernameHeader;
+
+    /**
+     * @var string
+     */
     private $usernameParameter;
 
     /**
@@ -82,6 +87,7 @@ class SwitchUserStatelessListener implements ListenerInterface
      * @param AccessDecisionManagerInterface $accessDecisionManager
      * @param LoggerInterface                $logger
      * @param string                         $usernameParameter
+     * @param string                         $usernameHeader
      * @param string                         $role
      * @param EventDispatcherInterface       $dispatcher
      */
@@ -92,7 +98,8 @@ class SwitchUserStatelessListener implements ListenerInterface
         $providerKey,
         AccessDecisionManagerInterface $accessDecisionManager,
         LoggerInterface $logger = null,
-        $usernameParameter = 'X-Switch-User',
+        $usernameParameter = '_switch_user',
+        $usernameHeader = 'X-Switch-User',
         $role = 'ROLE_ALLOWED_TO_SWITCH',
         EventDispatcherInterface $dispatcher = null
     ) {
@@ -102,6 +109,7 @@ class SwitchUserStatelessListener implements ListenerInterface
         $this->providerKey = $providerKey;
         $this->accessDecisionManager = $accessDecisionManager;
         $this->usernameParameter = $usernameParameter;
+        $this->usernameHeader = $usernameHeader;
         $this->role = $role;
         $this->logger = $logger ?: new NullLogger();
         $this->dispatcher = $dispatcher;
@@ -116,23 +124,31 @@ class SwitchUserStatelessListener implements ListenerInterface
     {
         $request = $event->getRequest();
 
+        $username = null;
+
         // Check if specified parameter is sent in headers
-        if (!$request->headers->get($this->usernameParameter)) {
-            return;
+        if ($this->usernameHeader && $request->headers->has($this->usernameHeader)) {
+            $username = $request->headers->get($this->usernameHeader);
+        }
+        elseif ($this->usernameParameter && $request->query->has($this->usernameParameter)) {
+            $username = $request->query->get($this->usernameParameter);
         }
 
-        $this->tokenStorage->setToken($this->attemptSwitchUser($request));
+        if ($username) {
+            $this->tokenStorage->setToken($this->attemptSwitchUser($request, $username));
+        }
     }
 
     /**
      * @param Request $request A Request instance
+     * @param string  $username The username to switch to
      *
      * @return TokenInterface|null The new TokenInterface if successfully switched, null otherwise
      *
      * @throws AccessDeniedException
      * @throws TokenNotFoundException
      */
-    private function attemptSwitchUser(Request $request)
+    private function attemptSwitchUser(Request $request, $username)
     {
         $token = $this->tokenStorage->getToken();
 
@@ -143,8 +159,6 @@ class SwitchUserStatelessListener implements ListenerInterface
         if (false === $this->accessDecisionManager->decide($token, [$this->role])) {
             throw new AccessDeniedException();
         }
-
-        $username = $request->headers->get($this->usernameParameter);
 
         $this->logger->info(
             'Attempt to switch user',
