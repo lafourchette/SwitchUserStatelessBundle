@@ -6,7 +6,7 @@ use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityF
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -30,7 +30,7 @@ class SwitchUserStatelessFactory implements SecurityFactoryInterface
         $providerId = sprintf('%s.%s', self::PROVIDER_SWITCH_USER_STATELESS, $id);
         $container->setDefinition(
             $providerId,
-            new DefinitionDecorator(self::PROVIDER_SWITCH_USER_STATELESS)
+            new ChildDefinition(self::PROVIDER_SWITCH_USER_STATELESS)
         );
 
         // The listener does the logic
@@ -38,7 +38,7 @@ class SwitchUserStatelessFactory implements SecurityFactoryInterface
         $container
             ->setDefinition(
                 $listenerId,
-                new DefinitionDecorator(self::LISTENER_SWITCH_USER_STATELESS)
+                new ChildDefinition(self::LISTENER_SWITCH_USER_STATELESS)
             )
             ->replaceArgument(1, new Reference($userProvider))
             ->replaceArgument(3, $id)
